@@ -74,10 +74,12 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(arg) == 1:
             print("** instance id missing **")
-        elif args_split[0]+'.'+args_split[1] not in FileStorage.__objects.keys():
-            print("** no instance found **")
         else:
-            del FileStorage.__objects[args_split[0]+'.'+args_split[1]].save()
+            if args_split[0]+'.'+args_split[1] not in FileStorage.__objects.keys():
+                print("** no instance found **")
+            else:  
+                del FileStorage.__objects[args_split[0]+'.'+args_split[1]]
+                FileStorage().save()
 
     def do_all(self, arg):
         """print str representation of all instances
