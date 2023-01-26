@@ -37,9 +37,9 @@ class HBNBCommand(cmd.Cmd):
         elif arg not in self.classes:
             print("** class doesn't exist **")
         else:
-            new = HBNBCommand.className[arg]()
+            #new = HBNBCommand.className[arg]()
             #HBNBCommand.className[arg].save(new)
-            #new = eval(arg)()
+            new = eval(arg)()
             new.save()
             print(new.id)
     
@@ -56,7 +56,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(split_args) == 1:
             print("** instance id missing **")
 
-        elif split_args[0] + "." + split_args[1] not in FileStorage.__objects.keys():
+        elif split_args[0] + "." + split_args[1] not in FileStorage().all().keys():
             print("** no instance found **")
         
         else:
