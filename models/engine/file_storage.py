@@ -5,6 +5,12 @@ storage by serialization and deserialization model
 import json
 from models.base_model import BaseModel
 from models.user import User
+from models.city import City
+from models.amenity import Amenity
+from models.state import State
+from models.place import Place
+from models.review import Review
+
 
 
 class FileStorage:
@@ -13,7 +19,13 @@ class FileStorage:
 
     __file__path = 'file.json'
     _objects = {}
-
+    classes = {'Basemodel': BaseModel,
+                'User': User,
+                'City': City,
+                'Amenity': Amenity,
+                'State': State,
+                'Place': Place,
+                'Review': Review}
     def all(self):
         """returns dict _objects"""
         return FileStorage.__objects
@@ -39,6 +51,6 @@ class FileStorage:
                 new_dict = json.load(file)
                 for k, v in new_dict.items():
                     obj_dict = new_dict[k]
-                    FileStorage.__objects[k] = eval(v['__class__'])(**obj_dict)
+                    FileStorage.__objects[k] = FileStorage.classes[k.split('.')[0]](**obj_dict)
         except FileNotFoundError:
             pass 
