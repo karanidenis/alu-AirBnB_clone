@@ -145,12 +145,13 @@ class HBNBCommand(cmd.Cmd):
             user_key = args[0] + args[1]
             attr_name = args[2]
             attr_val = args[3]
-            if user_key not in obj_dict.keys():
-                print("** no instance found **")
-            else:
+            if user_key in obj_dict.keys():
                 obj = obj_dict[user_key]
                 setattr(obj, attr_name, attr_val)
                 obj.save()
+            else:
+                print("** no instance found **")
+
 
 
 if __name__ == '__main__':
