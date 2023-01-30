@@ -15,12 +15,12 @@ from models.user import User
 from models.engine.file_storage import FileStorage
 
 classes = {"BaseModel": BaseModel,
-            "User": User,
-            "City": City,
-            "Place": Place,
-            "Review": Review,
-            "State": State,
-            "Amenity": Amenity}
+           "User": User,
+           "City": City,
+           "Place": Place,
+           "Review": Review,
+           "State": State,
+           "Amenity": Amenity}
 
 
 class HBNBCommand(cmd.Cmd):
@@ -112,8 +112,9 @@ class HBNBCommand(cmd.Cmd):
         elif arg not in classes.keys():
             print("** class doesn't exist **")
         else:
-            print([str(obj) for key, obj in objects.items()
-                if key.split('.')[0] == arg])
+            for key, obj in objects.items():
+                if key.split('.')[0] == arg:
+                    print(str(obj))
 
     def do_update(self, arg):
         """
