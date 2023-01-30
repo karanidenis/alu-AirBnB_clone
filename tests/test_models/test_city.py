@@ -38,7 +38,7 @@ class City_testing(unittest.TestCase):
                         "<class 'models.city.City'>")
 
      def test_amenity_is_a_subclass_of_basemodel(self):
-         self.assertTrue(issubclass(type(self.city), BaseModel))
+         self.assertTrue(issubclass(type(City), BaseModel))
 
      def test_field_types(self):
          """ Test field attributes of user """
