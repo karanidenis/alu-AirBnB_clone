@@ -50,8 +50,6 @@ class HBNBCommand(cmd.Cmd):
         elif arg not in classes.keys():
             print("** class doesn't exist **")
         else:
-            #new = HBNBCommand.className[arg]()
-            #HBNBCommand.className[arg].save(new)
             new = classes[arg]()
             new.save()
             print(new.id)
@@ -88,27 +86,23 @@ class HBNBCommand(cmd.Cmd):
         delete an instance based on class name 
         and id and save changes in Json file
         """
-        args_split = arg.split(" ")
-        if not arg:
+        args_split = arg.split(' ')
+        if len(arg) == 0:
             print("** class name missing **")
         elif args_split[0] not in classes.keys():
             print("** class doesn't exist **")
         elif len(args_split) == 1:
             print("** instance id missing **")
         
-        # if args_split[0]+'.'+args_split[1] not in FileStorage.__objects.keys():
-        #     print("** no instance found **")
-        # else:  
-        #     del FileStorage.__objects[args_split[0]+'.'+args_split[1]]
-        #     FileStorage().save()
-        user_key = args_split[0]+'.'+args_split[1]
+        user_key = args_split[0] + '.' + args_split[1]
         storage = FileStorage()
         storage.reload()
         objects = storage.all()
         if user_key in objects.keys():
             del objects[user_key]
             storage.save()
-            return
+            return 
+
         print("** no instance found **")
 
     def do_all(self, arg):
