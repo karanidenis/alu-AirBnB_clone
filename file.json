@@ -1,1 +1,1 @@
-{"{obj.__class__.__name__}.{obj.id}": {"id": "da9d66ab-8e31-4673-ab40-d4e0e9a064cf", "created_at": 
+{"BaseModel.8f06f2b2-5eff-48ca-9e12-a415bb9d1c13": {"id": "8f06f2b2-5eff-48ca-9e12-a415bb9d1c13", "created_at": "2023-01-30T09:44:48.225187", "updated_at": "2023-01-30T09:44:48.225200", "name": "My_First_Model", "my_number": 89, "__class__": "BaseModel"}}
