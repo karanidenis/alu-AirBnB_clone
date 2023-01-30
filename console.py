@@ -53,23 +53,19 @@ class HBNBCommand(cmd.Cmd):
             new = classes[arg]()
             new.save()
             print(new.id)
-    
+
     def do_show(self, arg):
-        """print string representation of an instance 
+        """print string representation of an instance
         based on class name and id"""
 
         split_args = arg.split(" ")
-        if  not arg:
-           print("** class name missing **") 
+        if not arg:
+           print("** class name missing **")
         elif split_args[0] not in classes.keys():
             print("** class doesn't exist **")
 
         elif len(split_args) == 1:
             print("** instance id missing **")
-
-        #elif split_args[0] + "." + split_args[1] not in FileStorage().all().keys():
-            print("** no instance found **")
-
         else:
             user_key = split_args[0] + '.' + split_args[1]
             storage = FileStorage()
@@ -77,13 +73,13 @@ class HBNBCommand(cmd.Cmd):
             objects = storage.all()
             if user_key in objects.keys():
                 print(objects[user_key])
-                return 
+                return
 
             print("** no instance found **")
 
     def do_destroy(self, arg):
         """
-        delete an instance based on class name 
+        delete an instance based on class name
         and id and save changes in Json file
         """
         args_split = arg.split(' ')
@@ -101,15 +97,13 @@ class HBNBCommand(cmd.Cmd):
         if user_key in objects.keys():
             del objects[user_key]
             storage.save()
-            return 
+            return
 
         print("** no instance found **")
 
     def do_all(self, arg):
         """print str representation of all instances
         based on or not on class name"""
-
-        #split_arg = arg.split(" ")
 
         storage = FileStorage()
         storage.reload()
@@ -124,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, arg):
         """
-        updates and instance based on class name and id 
+        updates and instance based on class name and id
         by adding or updating attribute and save change  in json file
         """
         args = arg.split(" ")
@@ -137,7 +131,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(args) == 2:
             print("** attribute name missing **")
         elif len(args) == 3:
-            print("** value missing **")            
+            print("** value missing **")     
         else:
             storage = FileStorage()
             storage.reload()
