@@ -15,12 +15,12 @@ from models.user import User
 from models.engine.file_storage import FileStorage
 
 classes = {"BaseModel": BaseModel,
-        'User': User,
-        "City": City,
-        "Place": Place,
-        "Review": Review,
-        "State": State,
-        "Amenity": Amenity}
+            "User": User,
+            "City": City,
+            "Place": Place,
+            "Review": Review,
+            "State": State,
+            "Amenity": Amenity}
 
 
 class HBNBCommand(cmd.Cmd):
@@ -60,10 +60,9 @@ class HBNBCommand(cmd.Cmd):
 
         split_args = arg.split(" ")
         if not arg:
-           print("** class name missing **")
+            print("** class name missing **")
         elif split_args[0] not in classes.keys():
             print("** class doesn't exist **")
-
         elif len(split_args) == 1:
             print("** instance id missing **")
         else:
@@ -89,7 +88,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(args_split) == 1:
             print("** instance id missing **")
-        
+
         user_key = args_split[0] + '.' + args_split[1]
         storage = FileStorage()
         storage.reload()
@@ -114,7 +113,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         else:
             print([str(obj) for key, obj in objects.items()
-                    if key.split('.')[0] == arg])
+                if key.split('.')[0] == arg])
 
     def do_update(self, arg):
         """
@@ -131,7 +130,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(args) == 2:
             print("** attribute name missing **")
         elif len(args) == 3:
-            print("** value missing **")     
+            print("** value missing **")  
         else:
             storage = FileStorage()
             storage.reload()
