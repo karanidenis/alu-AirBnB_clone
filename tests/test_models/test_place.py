@@ -29,17 +29,17 @@ class TestPlaceClass(unittest.TestCase):
     #         self.assertTrue(hasattr(Place, attr))
 
     def test_class_attrs(self):
-        self.assertIs(type(self.Place.name), str)
-        self.assertIs(type(self.Place.city_id), str)
-        self.assertIs(type(self.Place.user_id), str)
-        self.assertIs(type(self.Place.description), str)
-        self.assertIs(type(self.Place.number_bathrooms), int)
-        self.assertIs(type(self.Place.max_guest), int)
-        self.assertIs(type(self.Place.number_rooms), int)
-        self.assertIs(type(self.Place.price_by_night), int)
-        self.assertIs(type(self.Place.latitude), float)
-        self.assertIs(type(self.Place.longitude), float)
-        self.assertIs(type(self.Place.amenity_ids), list)
+        self.assertIs(type(self.my_place.name), str)
+        self.assertIs(type(self.my_place.city_id), str)
+        self.assertIs(type(self.my_place.user_id), str)
+        self.assertIs(type(self.my_place.description), str)
+        self.assertIs(type(self.my_place.number_bathrooms), int)
+        self.assertIs(type(self.my_place.max_guest), int)
+        self.assertIs(type(self.my_place.number_rooms), int)
+        self.assertIs(type(self.my_place.price_by_night), int)
+        self.assertIs(type(self.my_place.latitude), float)
+        self.assertIs(type(self.my_place.longitude), float)
+        self.assertIs(type(self.my_place.amenity_ids), list)
 
 
 if __name__ == '__main__':
