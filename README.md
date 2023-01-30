@@ -25,16 +25,40 @@ Do operations on objects (count, compute stats, etc…)
 Update attributes of an object
 Destroy an object
 
+USING THE CONSOLE:
+ the console can be run both interactively and non-interactively. To run the console in interactive mode, pipe any command(s) into an execution of the file console.py at the command line.
+ 
+ $ ./console.py
+(hbnb) help
 
-HOW TO START IT:
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
 
+(hbnb) 
+(hbnb) 
+(hbnb) quit
+$
 
+ To use the console in non-interactive mode;
+ 
+ $ echo "help" | ./console.py
+(hbnb)
 
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+(hbnb) 
+$
+$ cat test_help
+help
+$
+$ cat test_help | ./console.py
+(hbnb)
 
-
-HOW TO USE IT:
-
-
-
-
-EXAMPLE:
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+(hbnb) 
+$
+ 
