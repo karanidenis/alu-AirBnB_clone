@@ -110,14 +110,14 @@ class HBNBCommand(cmd.Cmd):
         based on or not on class name"""
 
         #split_arg = arg.split(" ")
-        if arg not in classes.keys():
-            print("** class doesn't exist **")
 
         storage = FileStorage()
         storage.reload()
         objects = storage.all()
         if not arg:
             print([str(obj) for obj in objects.values()])
+        elif arg not in classes.keys():
+            print("** class doesn't exist **")
         else:
             print([str(obj) for key, obj in objects.items()
                     if key.split('.')[0] == arg])
