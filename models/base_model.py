@@ -14,7 +14,6 @@ class BaseModel:
     """
     def __init__(self, *args, **kwargs):
         """new instance"""
-        from models import storage
         if kwargs.__len__() > 0:
             for k, v in kwargs.items():
                if k == 'created_at' or k == 'updated_at':
@@ -25,9 +24,9 @@ class BaseModel:
                    setattr(self, k, v)
         else:
             self.id = str(uuid4())
-            self.created_at= datetime.now()
-            self.updated_at = datetime.now()
-            storage.new(self)
+            self.created_at= datetime.utcnow()
+            self.updated_at = datetime.utcnow()
+            models.storage.new(self)
 
     # def __init__(self):
     #     """
@@ -39,15 +38,14 @@ class BaseModel:
 
     def __str__(self):
         """ readable format """
-        return f"[{self.__class__.__name__}]({self.id}){self.__dict__}"
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
         """
         return a new value of updated_at
         """
-        from models import storage
-        self.updated_at = datetime.now()
-        storage.save()
+        self.updated_at = datetime.utcnow()
+        models.storage.save()
 
     def to_dict(self):
         """return dictionary"""

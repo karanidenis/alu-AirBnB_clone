@@ -6,13 +6,26 @@ entry point of command interpreter
 
 import cmd
 from models.base_model import BaseModel
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 from models.engine.file_storage import FileStorage
+
+classes = {"BaseModel": BaseModel,
+        'User': User,
+        "City": City,
+        "Place": Place,
+        "Review": Review,
+        "State": State,
+        "Amenity": Amenity}
 
 
 class HBNBCommand(cmd.Cmd):
     """command interpreter"""
     prompt = '(hbnb)'
-    classes = ['BaseModel']
 
     def do_quit(self, arg):
         """ if quit is used exit"""
@@ -34,12 +47,12 @@ class HBNBCommand(cmd.Cmd):
         """
         if not arg:
             print("** class name missing **")
-        elif arg not in self.classes:
+        elif arg not in classes.keys():
             print("** class doesn't exist **")
         else:
             #new = HBNBCommand.className[arg]()
             #HBNBCommand.className[arg].save(new)
-            new = eval(arg)()
+            new = classes[arg]()
             new.save()
             print(new.id)
     
@@ -50,17 +63,25 @@ class HBNBCommand(cmd.Cmd):
         split_args = arg.split(" ")
         if  not arg:
            print("** class name missing **") 
-        elif split_args[0] not in self.classes:
+        elif split_args[0] not in classes.keys():
             print("** class doesn't exist **")
 
         elif len(split_args) == 1:
             print("** instance id missing **")
 
-        elif split_args[0] + "." + split_args[1] not in FileStorage().all().keys():
+        #elif split_args[0] + "." + split_args[1] not in FileStorage().all().keys():
             print("** no instance found **")
-        
+
         else:
-            print(FileStorage.__objects[split_args[0]+"."+split_args[1]])
+            user_key = split_args[0] + '.' + split_args[1]
+            storage = FileStorage()
+            storage.reload()
+            objects = storage.all()
+            if user_key in objects.keys():
+                print(objects[user_key])
+                return 
+
+            print("** no instance found **")
 
     def do_destroy(self, arg):
         """
@@ -70,36 +91,42 @@ class HBNBCommand(cmd.Cmd):
         args_split = arg.split(" ")
         if not arg:
             print("** class name missing **")
-        elif args_split[0] not in self.classes:
+        elif args_split[0] not in classes.keys():
             print("** class doesn't exist **")
-        elif len(arg) == 1:
+        elif len(args_split) == 1:
             print("** instance id missing **")
-        else:
-            if args_split[0]+'.'+args_split[1] not in FileStorage.__objects.keys():
-                print("** no instance found **")
-            else:  
-                del FileStorage.__objects[args_split[0]+'.'+args_split[1]]
-                FileStorage().save()
+        
+        # if args_split[0]+'.'+args_split[1] not in FileStorage.__objects.keys():
+        #     print("** no instance found **")
+        # else:  
+        #     del FileStorage.__objects[args_split[0]+'.'+args_split[1]]
+        #     FileStorage().save()
+        user_key = args_split[0]+'.'+args_split[1]
+        storage = FileStorage()
+        storage.reload()
+        objects = storage.all()
+        if user_key in objects.keys():
+            del objects[user_key]
+            storage.save()
+            return
+        print("** no instance found **")
 
     def do_all(self, arg):
         """print str representation of all instances
         based on or not on class name"""
 
         split_arg = arg.split(" ")
-        if split_arg[0] not in self.classes:
+        if split_arg[0] not in classes.keys():
             print("** class doesn't exist **")
+
+        storage = FileStorage()
+        storage.reload()
+        objects = storage.all()
+        if not arg:
+            print([str(obj) for obj in objects.values()])
         else:
-            list_Obj = []
-            for k, val in FileStorage.__objects.items():
-                if split_arg[0] in k:
-                    list_Obj.append(str(val))
-            print(list_Obj)
-        if len(arg) == 0: #if not arg
-            obj_list = []
-            for key, vals in FileStorage._objects.items():
-                obj_list.append(str(vals))
-            if len(str(obj_list)) > 0:
-                print(obj_list)
+            print([str(obj) for key, obj in objects.items()
+                    if key.split('.')[0] == arg])
 
     def do_update(self, arg):
         """
@@ -109,25 +136,26 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split(" ")
         if not arg:
             print("** class name missing **")
-        elif args[0] not in self.classes:
+        elif args[0] not in classes.keys():
             print("** class doesn't exist **")
         elif len(arg) == 1:
             print("** instance id missing **")
-        elif args[0]+'.'+args[1] not in FileStorage.__objects.items():
-            print("** no instance found **")
         elif len(args) == 2:
             print("** attribute name missing **")
         elif len(args) == 3:
-            print("** value missing **")
+            print("** value missing **")            
         else:
-            obj_dict = FileStorage().all()
-            value = type(eval(args[3]))
-            third_arg = args[3]
-            third_arg = third_arg.strip("'")
-            third_arg = third_arg.strip('"')
-            for key in obj_dict:
-                setattr(obj_dict.get(key), args[2], value(third_arg))
-                obj_dict[key].save()
+            storage = FileStorage()
+            storage.reload()
+            obj_dict = storage.all()
+            user_key = args[0] + args[1]
+            attr_name = args[2]
+            attr_val = args[3]
+            if user_key not in obj_dict:
+                print("** no instance found **")
+            obj = obj_dict[user_key]
+            setattr(obj, attr_name, attr_val)
+            obj.save()
         
 
 if __name__ == '__main__':
