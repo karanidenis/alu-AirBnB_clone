@@ -131,7 +131,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(args) == 2:
             print("** attribute name missing **")
         elif len(args) == 3:
-            print("** value missing **")  
+            print("** value missing **")
         else:
             storage = FileStorage()
             storage.reload()
