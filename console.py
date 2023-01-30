@@ -109,8 +109,8 @@ class HBNBCommand(cmd.Cmd):
         """print str representation of all instances
         based on or not on class name"""
 
-        split_arg = arg.split(" ")
-        if split_arg[0] not in classes.keys():
+        #split_arg = arg.split(" ")
+        if arg not in classes.keys():
             print("** class doesn't exist **")
 
         storage = FileStorage()
@@ -151,7 +151,6 @@ class HBNBCommand(cmd.Cmd):
                 obj.save()
             else:
                 print("** no instance found **")
-
 
 
 if __name__ == '__main__':
