@@ -10,6 +10,6 @@ class Review(BaseModel):
     """defines review class
     inherits from basemodel"""
 
-    place_id =  "" # will be place.id
-    user_id = "" # will be user.id
+    place_id = ""  # will be place.id
+    user_id = ""  # will be user.id
     text = ""

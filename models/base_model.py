@@ -8,6 +8,7 @@ from uuid import uuid4
 from datetime import datetime
 import models
 
+
 class BaseModel:
     """
     The base class for all classes
@@ -16,25 +17,17 @@ class BaseModel:
         """new instance"""
         if kwargs.__len__() > 0:
             for k, v in kwargs.items():
-               if k == 'created_at' or k == 'updated_at':
-                   v = datetime.fromisoformat(v)
-                   setattr(self, k, v)
-                   continue
-               if k != '__class__':
-                   setattr(self, k, v)
+                if k == 'created_at' or k == 'updated_at':
+                    v = datetime.fromisoformat(v)
+                    setattr(self, k, v)
+                    continue
+                if k != '__class__':
+                    setattr(self, k, v)
         else:
             self.id = str(uuid4())
-            self.created_at= datetime.utcnow()
+            self.created_at = datetime.utcnow()
             self.updated_at = datetime.utcnow()
             models.storage.new(self)
-
-    # def __init__(self):
-    #     """
-    #     initialising 
-    #     """
-    #     self.id = str(uuid4())
-    #     self.created_at = datetime.now()
-    #     self.updated_at = datetime.now()
 
     def __str__(self):
         """ readable format """

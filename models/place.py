@@ -5,11 +5,12 @@ Place module
 
 from models.base_model import BaseModel
 
+
 class Place(BaseModel):
     """defines place class
     inherits from Basemodel"""
 
-    city_id = ""  #will be city.id
+    city_id = ""  # will be city.id
     user_id = ""  # will be user.id
     name = ""
     description = ""
@@ -20,5 +21,3 @@ class Place(BaseModel):
     latitude = 0.0
     longitude = 0.0
     amenity_ids = []
-
-

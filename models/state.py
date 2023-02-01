@@ -5,7 +5,7 @@ from models.base_model import BaseModel
 
 
 class State(BaseModel):
-    """ define methods for states class 
+    """ define methods for states class
     inherit methods from Basemodel """
 
     name = ""
