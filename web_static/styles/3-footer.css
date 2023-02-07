@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 footer{
     background-color: white;
     /* color: red; */
@@ -11,3 +12,16 @@ footer{
     position: fixed; 
     bottom: 0;
 }
+=======
+footer {
+    background-color: white;
+    height: 60px;
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    line-height: 60px;
+    border-top: 1px solid #CCCCCC;
+}
+>>>>>>> refs/remotes/origin/main
