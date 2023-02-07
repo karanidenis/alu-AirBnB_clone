@@ -37,13 +37,13 @@ class BaseModel:
         """
         return a new value of updated_at
         """
-        self.updated_at = datetime.utcnow()
+        self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):
         """return dictionary"""
         new_dict = self.__dict__.copy()
         new_dict['__class__'] = self.__class__.__name__
-        new_dict['created_at'] = new_dict['created_at'].isoformat()
         new_dict['updated_at'] = new_dict['updated_at'].isoformat()
+        new_dict['created_at'] = new_dict['created_at'].isoformat()
         return new_dict
