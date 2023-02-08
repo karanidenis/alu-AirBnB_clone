@@ -1,12 +1,10 @@
-<<<<<<< HEAD
-.filters{
+/* .filters{
     background-color: blue; 
     height: 70px;
     width: 100%;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
     display: inline-block;
-    /* display: block; */
 }
 .filters button {
     font-size: 18px;
@@ -34,7 +32,6 @@
     vertical-align: middle;
     margin: 45px;
     float: left;
-    /* line-height: 20px; */
     background-color: green;
 }
 .locations {
@@ -84,8 +81,8 @@ h4 {
 
 .popover ul{
     list-style-type: none;
-}
-=======
+} */
+
 .filters {
 	display: block;
 	background-color: white;
@@ -144,9 +141,6 @@ ul {
 	padding-bottom: 20px;
 }
 
-li {
-}	
-
 h2 {
 	font-size: 16px;
 	padding-left: 30px;
@@ -187,4 +181,3 @@ button {
 button:hover {
 	opacity: 90%;
 }
->>>>>>> refs/remotes/origin/main
