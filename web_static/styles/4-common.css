@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-body{
+/* body{
     margin: 0px; 
     padding: 0px;
     color: #484848;
@@ -7,8 +6,9 @@ body{
     font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 .container{
-    /* background-color: blue; */
-=======
+    background-color: blue; 
+} */
+
 body {
 	margin:0px;
 	padding:0px;
@@ -19,7 +19,6 @@ body {
 }
 
 .container {
->>>>>>> refs/remotes/origin/main
     max-width: 1000px;
     margin: 30px auto;
 }
