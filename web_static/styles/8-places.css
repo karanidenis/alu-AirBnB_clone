@@ -32,6 +32,7 @@ article {
     flex-direction: row;
     align-content: flex-start;
     border-radius: 4px;
+    overflow: auto;
 }
 article h2{
     font-size: 30px;
