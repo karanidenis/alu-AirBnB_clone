@@ -1,5 +1,4 @@
 .places{
-    /* position: relative; */
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -24,38 +23,36 @@ article {
     padding-top: 10px;
     padding-right: 10px;
     padding-left: 10px;
-    padding-bottom: 10px;
-    margin: 5px;
+    padding-bottom: 60px;
+    margin: 20px;
     border: 1px solid #FF5A5F;
     display: flex;
     flex: none;
     flex-wrap: wrap;
     flex-direction: row;
-    /* align-content: flex-start; */
+    align-content: flex-start;
     border-radius: 4px;
-    /* text-align: center; */
 }
 article h2{
     font-size: 30px;
-    /* padding: 0px; */
-    margin: 5px auto;
+    padding: 0px;
+    margin: 1px auto;
 }
 .price_by_night {
     color: #FF5A5F;
     border: 4px solid #FF5A5F;
     min-width: 60px;
-    height: 50px;
+    height: 60px;
     font-size: 30px;
     align-self: flex-end;
     display: flex;
     justify-content: center;
     position: absolute;
     right: 0;
-    /* text-align: center; */
-    /* list-style: 60px; */
     padding: 5px;
     border-radius: 100%;
     float: right;
+    line-height: 60px;
 }
 
 .information {
@@ -78,8 +75,8 @@ article h2{
 }
 
 .user {
-    /* margin-top: 5px;
-    margin-bottom: 5px; */
+    margin-top: 5px; 
+    margin-bottom: 5px; 
     text-align: left;
 }
 
@@ -119,6 +116,6 @@ article h2{
 	flex-direction: row;
 	position: relative;
 
-	height: 60px;	
+	height: 80px;	
 	width: 100%;
 }
