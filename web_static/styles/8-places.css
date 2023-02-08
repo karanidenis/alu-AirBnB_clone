@@ -76,7 +76,7 @@ article h2{
 .user {
     margin-top: 5px; 
     margin-bottom: 5px; 
-    text-align: left;
+    /* text-align: left; */
 }
 
 .description {
