@@ -243,33 +243,68 @@ class HBNBCommand(cmd.Cmd):
         updates and instance based on class name and id
         by adding or updating attribute and save change  in json file
         """
-        storage = FileStorage()
-        storage.reload()
-        obj_dict = storage.all()
-        args = arg.split(" ")
-        cls_name = args[0]
-        class_id = args[1]
-        user_key = cls_name + '.' + class_id
-        attr_name = args[2]
-        attr_val = args[3]
-        if not cls_name:
-            print("** class name missing **")
-            return
-        if len(args) == 1:
-            print("** instance id missing **")
-        if len(args) == 2:
-            print("** attribute name missing **")
-        if len(args) == 3:
-            print("** value missing **")
-        if user_key not in classes.keys():
-            print("** class doesn't exist **")
-            return
-        if user_key in obj_dict.keys():
-            obj = obj_dict[user_key]
-            setattr(obj, attr_name, attr_val)
-            obj.save()
-        else:
+        # storage = FileStorage()
+        # storage.reload()
+        # obj_dict = storage.all()
+        # args = arg.split(" ")
+        # cls_name = args[0]
+        # class_id = args[1]
+        # user_key = cls_name + '.' + class_id
+        # attr_name = args[2]
+        # attr_val = args[3]
+        # if not cls_name:
+        #     print("** class name missing **")
+        #     return
+        # if len(args) == 1:
+        #     print("** instance id missing **")
+        # if len(args) == 2:
+        #     print("** attribute name missing **")
+        # if len(args) == 3:
+        #     print("** value missing **")
+        # if user_key not in classes.keys():
+        #     print("** class doesn't exist **")
+        #     return
+        # if user_key in obj_dict.keys():
+        #     obj = obj_dict[user_key]
+        #     setattr(obj, attr_name, attr_val)
+        #     obj.save()
+        # else:
+        #     print("** no instance found **")
+
+        args = arg.split()
+        try:
+            storage = FileStorage()
+            new_obj = storage.all()
+            if len(args) == 0:
+                print("** class name missing **")
+                return
+            for key, value in new_obj.items():
+                if len(args) >= 2:
+                    if len(args) >= 4:
+                        if key == f"{args[0]}.{args[1]}":
+                            new_obj[key].__dict__[args[2]] = args[3].strip('"')
+                            storage.save()
+                            return
+                    else:
+                        if args[1]:
+                            print("** attribute name missing **")
+                            return
+                        elif args[2]:
+                            print("** value missing **")
+                            return
+
+                if len(args) == 1:
+                    if key.split(".")[0] != args[0]:
+                        print("** class doesn't exist **")
+                        return
+                    if key.split(".")[0] == args[0]:
+                        print("** instance id missing **")
+                        return
             print("** no instance found **")
+            return
+
+        except Exception as excp:
+            print(excp)
 
     def do_count(self, args):
         """
