@@ -5,6 +5,7 @@ entry point of command interpreter
 """
 
 import cmd
+import sys
 from models.base_model import BaseModel
 from models.amenity import Amenity
 from models.city import City
@@ -25,110 +26,80 @@ classes = {"BaseModel": BaseModel,
 
 class HBNBCommand(cmd.Cmd):
     """command interpreter"""
-    prompt = '(hbnb)'
+    prompt = '(hbnb)' if sys.__stdin__.isatty() else ''
 
-# #dot notation commands
-#     def default(self, line):
-#         """default method for commands not in the cmd module.
-#         For this application it handles the dot notation commands."""
+    classes = {
+               'BaseModel': BaseModel, 'User': User, 'Place': Place,
+               'State': State, 'City': City, 'Amenity': Amenity,
+               'Review': Review
+              }
+    dot_cmds = ['all', 'count', 'show', 'destroy', 'update']
+    types = {
+             'number_rooms': int, 'number_bathrooms': int,
+             'max_guest': int, 'price_by_night': int,
+             'latitude': float, 'longitude': float
+            }
 
-#         if "." in line:
+    def preloop(self):
+        """Prints if isatty is false"""
+        if not sys.__stdin__.isatty():
+            print('(hbnb)')
 
-#             command = line.split(".")
-#             if command[1] == "all()":
-#                 self.do_all(command[0])
+    def precmd(self, line):
+        """Reformat command line for advanced command syntax.
+        Usage: <class name>.<command>([<id> [<*args> or <**kwargs>]])
+        (Brackets denote optional fields in usage example.)
+        """
+        _cmd = _cls = _id = _args = ''  # initialize line elements
 
-#             elif command[1] == "count()":
-#                 self.do_count(command[0])
+        # scan for general formating - i.e '.', '(', ')'
+        if not ('.' in line and '(' in line and ')' in line):
+            return line
 
-#             elif command[1].startswith("show("):
-#                 self.do_show(command[0] + " " + command[1][6:-2])
+        try:  # parse line left to right
+            pline = line[:]  # parsed line
 
-#             elif command[1].startswith("destroy("):
-#                 self.do_destroy(command[0] + " " + command[1][9:-2])
+            # isolate <class name>
+            _cls = pline[:pline.find('.')]
 
-#             elif command[1].startswith("update("):
+            # isolate and validate <command>
+            _cmd = pline[pline.find('.') + 1:pline.find('(')]
+            if _cmd not in HBNBCommand.dot_cmds:
+                raise Exception
 
-#                 # remove the model name, and get the rest of the string
-#                 command_pattern = re.compile("update\\((.+)\\)")
-#                 command_result = command_pattern.search(line).group()
+            # if parantheses contain arguments, parse them
+            pline = pline[pline.find('(') + 1:pline.find(')')]
+            if pline:
+                # partition args: (<id>, [<delim>], [<*args>])
+                pline = pline.partition(', ')  # pline convert to tuple
 
-#                 # get Id from the string
-#                 id_pattern = re.compile(
-#                     "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}"
-#                     "-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
-#                 )
+                # isolate _id, stripping quotes
+                _id = pline[0].replace('\"', '')
+                # possible bug here:
+                # empty quotes register as empty _id when replaced
 
-#                 id = id_pattern.search(command_result)
-#                 if id is not None:
-#                     id = id.group()
-#                 # check if attributes and values are provided in dict format
-#                 dict_repr_pattern = re.compile(r"{.+}")
-#                 dict_repr = dict_repr_pattern.search(line)
+                # if arguments exist beyond _id
+                pline = pline[2].strip()  # pline is now str
+                if pline:
+                    # check for *args or **kwargs
+                    if pline[0] == '{' and pline[-1] =='}'\
+                            and type(eval(pline)) == dict:
+                        _args = pline
+                    else:
+                        _args = pline.replace(',', '')
+                        # _args = _args.replace('\"', '')
+            line = ' '.join([_cmd, _cls, _id, _args])
 
-#                 # if it is dict format, execute update for each key value pair
-#                 if dict_repr:
+        except Exception as mess:
+            pass
+        finally:
+            return line
 
-#                     # get dict representation
-#                     dict_repr = dict_repr.group()
-#                     dict_repr = eval(dict_repr)
-
-#                     # excute the update with each key value pair
-#                     for key, value in dict_repr.items():
-#                         param_to_pass = command[0] + ' ' + \
-#                             str(id) + ' ' + key + ' ' + str(value)
-#                         self.do_update(param_to_pass)
-
-#                 # if dict format is not provided, it means the attributes
-#                 #  and values are provided as parameters
-#                 else:
-
-#                     # get the parameters from the string
-#                     # and remove the first and last brackets
-#                     # the format of parms variable is as follows:
-#                     # ex: params:  "b1d6-eaaddf0e76c1", "first_name", "John"
-#                     # on the above line id value is trimmed for convenience.
-#                     params = command_result[7:-1]
-#                     # print("params: ", params)
-
-#                     # the following for loop is to check if user entered
-#                     # values with spaces after comma(,).
-#                     # If the user did not enter spaces after comma(,)
-#                     # it will create a problem while slicing the string to
-#                     # get the values, specifically value parameter is extracted
-#                     # without error given space is provided after comma(,).
-#                     index_counter = 0
-#                     for param in params.split(","):
-
-#                         if index_counter >= 1 and not param.startswith(" "):
-#                             print(
-#                                 "Insert spaces after comma(,) "
-#                                 "to divide parameters"
-#                             )
-#                             return
-#                         index_counter += 1
-
-#                     # get the id, attribute and value from the string
-#                     attr = params.split(",")[1][2:-1]
-#                     value = params.split(",")[2][1:]
-
-#                     # incase the value of variable value is int pass it on eval
-#                     # to convert it to int, if it is not int, it will throw an
-#                     # exception, in that case we will not pass it on eval.
-#                     try:
-#                         eval(value)
-#                         value = eval(value)
-#                     except Exception as e:
-#                         pass
-
-#                     # create the parameter string to pass on to do_update
-#                     param_to_pass = command[0] + ' ' + \
-#                         str(id) + ' ' + attr + ' ' + str(value)
-#                     self.do_update(param_to_pass)
-#             else:
-#                 print("*** Unknown syntax: {}".format(line))
-#         else:
-#             print("*** Unknown syntax: {}".format(line))
+    def postcmd(self, stop, line):
+        """Prints if isatty is false"""
+        if not sys.__stdin__.isatty():
+            print('(hbnb) ', end='')
+        return stop
 
 #commands used on the console
     def do_quit(self, arg):
@@ -313,6 +284,7 @@ class HBNBCommand(cmd.Cmd):
         storage = FileStorage()
         storage.reload()
         objects = storage.all()
+        count = 0
         if not args:
             print(len([str(obj) for obj in objects.values()]))
         
@@ -320,8 +292,12 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         
         else:
-            print(len([str(obj) for key, obj in objects.items()
-                    if key.split(' ')[0] == args]))
+            # print(len([str(obj) for key, obj in objects.items()
+            #         if key.split('.')[0] == args]))
+            for key, value in objects.items():
+                if args[0] in  key:
+                    count += 1
+            print(count)
 
 
 if __name__ == '__main__':
