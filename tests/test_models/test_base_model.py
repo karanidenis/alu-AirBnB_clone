@@ -5,18 +5,25 @@ Tests the base model attributes
 
 from models.base_model import BaseModel
 import unittest
+import json
 
 
 class TestBaseModel(unittest.TestCase):
     """
     Checks every aspect of creation of a base model
     """
+    def __init__(self, *args, **kwargs):
+        """ """
+        super().__init__(*args, **kwargs)
+        self.name = 'BaseModel'
+        self.value = BaseModel
 
     def setUp(self) -> None:
         self.b1 = BaseModel()
         self.b3 = BaseModel()
         self.b1_to_dict  = self.b1.to_dict()
         self.b2 = BaseModel(**self.b1_to_dict)
+        self.name = 'BaseModel'
 
     def test_to_dict_method(self):
         """
@@ -54,6 +61,15 @@ class TestBaseModel(unittest.TestCase):
         self.b1.save()
         self.b3.save()
         self.assertNotEqual(self.b1.updated_at, self.b3.updated_at)
+
+    def test_save(self):
+        "if "
+        name = self.value()
+        name.save()
+        key = self.name + '.' + name.id
+        with open('file.json', 'r') as fille:
+            f = json.load(fille)
+            self.assertEqual(f[key], name.to_dict())
 
 
 if __name__ == '__main__':
