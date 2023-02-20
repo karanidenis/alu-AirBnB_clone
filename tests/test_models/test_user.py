@@ -34,6 +34,26 @@ class TestUserClass(unittest.TestCase):
         self.assertTrue(type(my_user.first_name) == str)
         self.assertTrue(type(my_user.last_name) == str)
 
+    def test_first_name(self):
+        """test type"""
+        my_user = User()
+        self.assertEqual(type(my_user.first_name), str)
+
+    def test_email(self):
+        """TEST EMAIL TYPE"""
+        my_user = User()
+        self.assertEqual(type(my_user.email), str)
+
+    def test_password(self):
+        """test password type"""
+        my_user = User()
+        self.assertEqual(type(my_user.password), str)
+
+    def test_last_name(self):
+        """test last_name type"""
+        my_user = User()
+        self.assertEqual(type(my_user.last_name), str)
+
 
 if __name__ == '__main__':
     unittest.main()
