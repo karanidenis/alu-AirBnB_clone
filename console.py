@@ -78,7 +78,7 @@ class HBNBCommand(cmd.Cmd):
                 pline = pline[2].strip()  # pline is now str
                 if pline:
                     # check for *args or **kwargs
-                    if pline[0] == '{' and pline[-1] =='}'\
+                    if pline[0] == '{' and pline[-1] == '}'\
                             and type(eval(pline)) == dict:
                         _args = pline
                     else:
@@ -97,7 +97,7 @@ class HBNBCommand(cmd.Cmd):
             print('(hbnb) ', end='')
         return stop
 
-#commands used on the console
+    #commands used on the console
     def do_quit(self, arg):
         """ Quit command to exit the program """
         return True
@@ -243,7 +243,6 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
             return
 
-
     def do_count(self, args):
         """
         Usage: count <class> or <class>.count()
@@ -255,15 +254,15 @@ class HBNBCommand(cmd.Cmd):
         count = 0
         # if not args:
         #     print(len([str(obj) for obj in objects.values()]))
-        
+
         if args not in classes.keys():
             print("** class doesn't exist **")
-        
+
         else:
             # print(len([str(obj) for key, obj in objects.items()
             #         if key.split('.')[0] == args]))
             for key, value in objects.items():
-                if args[0] in  key:
+                if args[0] in key:
                     count += 1
             print(count)
 
