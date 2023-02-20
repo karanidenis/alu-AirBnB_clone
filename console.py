@@ -155,14 +155,19 @@ class HBNBCommand(cmd.Cmd):
         and id and save changes in Json file
         """
         args = arg.split(' ')
-        if len(arg) == 0:
+        if len(arg) <1:
             print("** class name missing **")
-        elif args[0] not in classes.keys():
+            return
+        elif args[0] not in classes:
             print("** class doesn't exist **")
-        elif len(args) == 1:
+            return
+        elif len(args) < 2:
             print("** instance id missing **")
+            return
 
-        user_key = args[0] + '.' + args[1]
+        user_name = args[0]
+        user_id = args[1]
+        user_key = "{}.{}".format(user_name, user_id)
         storage = FileStorage()
         storage.reload()
         objects = storage.all()
@@ -206,11 +211,11 @@ class HBNBCommand(cmd.Cmd):
         by adding or updating attribute and save change  in json file
         """
         args = arg.split()
-        class_name = args[0]
 
         if len(args) < 1:
             print("** class name missing **")
             return
+        class_name = args[0]
         if class_name not in classes:
             print("** class doesn't exist **")
             return
@@ -222,7 +227,7 @@ class HBNBCommand(cmd.Cmd):
         key = "{}.{}".format(class_name, instance_id)
         all_instances = models.storage.all()
         if len(args) < 3:
-            print("** atribute name missing **")
+            print("** attribute name missing **")
             return
         if len(args) < 4:
             print("** value missing **")
