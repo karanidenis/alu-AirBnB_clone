@@ -97,7 +97,7 @@ class HBNBCommand(cmd.Cmd):
             print('(hbnb) ', end='')
         return stop
 
-    #commands used on the console
+# commands used on the console
     def do_quit(self, arg):
         """ Quit command to exit the program """
         return True
